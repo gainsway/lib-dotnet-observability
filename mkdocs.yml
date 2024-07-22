@@ -1,0 +1,8 @@
+site_name: "lib-dotnet-observability"
+site_description: "This library add open telemetry configuration extensions for .NET Core Api"
+
+nav:
+  - Introduction: index.md
+
+plugins:
+  - techdocs-core

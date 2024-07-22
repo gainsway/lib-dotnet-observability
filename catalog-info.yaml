@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "lib-dotnet-observability"
+  description: "This library add open telemetry configuration extensions for .NET Core Api"
+  annotations:
+    github.com/project-slug: gainsway/lib-dotnet-observability
+    backstage.io/techdocs-ref: dir:.
+  tags: 
+    - dotnet
+spec:
+  type: library
+  lifecycle: experimental
+  owner: "group:default/engineering"
