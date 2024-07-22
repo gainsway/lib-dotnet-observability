@@ -1,8 +1,19 @@
 # lib-dotnet-observability
 
-This library add OTEL configurations to .NET Core Api.
+This library add open telemetry configuration extensions for .NET Core Api
 
 ## Configuration
+
+1. Install `Gainsway.Observability` package in the target project
+  ```sh
+  dotnet add package Gainsway.Observability
+  ```
+2. Register the Observability services in the Infrastructure project:
+  ```csharp
+  # InfrastructureServiceExtensions.cs 
+  var appMetadata = builder.Configuration.GetApplicationMetadata();
+  builder.AddObservability(serviceName: appMetadata.ServiceName, commitShortSha: appMetadata.CommitShortSha);
+  ```
 
 ## Environment variables
 

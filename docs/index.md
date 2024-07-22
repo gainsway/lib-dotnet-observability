@@ -8,17 +8,21 @@ This library add open telemetry configuration extensions for .NET Core Api
   ```sh
   dotnet add package Gainsway.Observability
   ```
-2. Register the Observability services:
+2. Register the Observability services in the Infrastructure project:
   ```csharp
+  # InfrastructureServiceExtensions.cs 
   var appMetadata = builder.Configuration.GetApplicationMetadata();
   builder.AddObservability(serviceName: appMetadata.ServiceName, commitShortSha: appMetadata.CommitShortSha);
   ```
-  
-### Exporter configuration
 
-> 📝 In OpenTelemetry .NET environment variable keys are retrieved using
+## Environment variables
+
+> [!NOTE]
+> In OpenTelemetry .NET environment variable keys are retrieved using
   `IConfiguration` which means they may be set using other mechanisms such as
   defined in appSettings.json or specified on the command-line.
+
+### Exporter configuration
 
 The [OpenTelemetry
 Specification](https://github.com/open-telemetry/opentelemetry-specification/)
