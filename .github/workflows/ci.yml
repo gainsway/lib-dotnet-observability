@@ -61,9 +61,7 @@ jobs:
         run: dotnet nuget add source --username $GITHUB_OWNER --password ${{ secrets.NUGET_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/$GITHUB_OWNER/index.json"
 
       - name: Package
-        if: steps.gitversion.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change  
         run: dotnet pack -p:Version='${{ steps.gitversion.outputs.fullSemVer }}' -c Release --output Publish
 
       - name: Push package to GitHub packages 
-        if: steps.gitversion.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change  
-        run:  dotnet nuget push "Publish/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }} --source "github"
+        run:  dotnet nuget push "Publish/*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }} --source "github" --skip-duplicate
