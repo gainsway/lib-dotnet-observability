@@ -1,7 +1,7 @@
 # lib-dotnet-observability
 
 This library add open telemetry configuration extensions for .NET Core Api
-
+ test
 ## Configuration
 
 1. Install `Gainsway.Observability` package in the target project
