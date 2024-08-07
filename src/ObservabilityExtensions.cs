@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Confluent.Kafka.Extensions.OpenTelemetry;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Npgsql;
@@ -40,6 +41,7 @@ public static partial class ObservabilityExtensions
             {
                 t.AddAspNetCoreInstrumentation();
                 t.AddHttpClientInstrumentation();
+                t.AddConfluentKafkaInstrumentation();
                 t.AddNpgsql();
             })
             .UseOtlpExporter();
