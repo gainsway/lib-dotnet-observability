@@ -18,7 +18,7 @@ updates:
   - package-ecosystem: "dotnet-sdk"
     directory: "/" 
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     labels:
       - "dont-check-PRs-with-this-label"
       - "dependencies"
@@ -28,14 +28,14 @@ updates:
       - gainway
     directory: "/" 
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     labels:
       - "dont-check-PRs-with-this-label"
       - "dependencies"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     labels:
       - "dont-check-PRs-with-this-label"
       - "dependencies"
