@@ -31,6 +31,7 @@ public static partial class ObservabilityExtensions
                     serviceVersion: commitShortSha,
                     serviceInstanceId: Environment.MachineName
                 );
+                r.AddEnvironmentVariableDetector();
             })
             .WithLogging()
             .WithMetrics(m =>
