@@ -21,12 +21,15 @@ public class TraceDecorator<TDecorated> : DispatchProxy
         {
             throw new ArgumentNullException(nameof(targetMethod));
         }
-
-        var className = _decorated!.GetType().FullName;
+        var decoratedType = _decorated?.GetType();
+        var className = decoratedType?.Name;
         var activity =
             className?.StartsWith("generated") ?? false
                 ? null
                 : Activity.Current?.Source.StartActivity($"{className}.{targetMethod.Name}");
+
+        activity?.AddTag("classFullName", decoratedType?.FullName);
+        activity?.AddTag("assembly", decoratedType?.Assembly.FullName);
 
         try
         {
