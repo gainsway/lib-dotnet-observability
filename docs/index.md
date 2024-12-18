@@ -5,39 +5,45 @@ This library add open telemetry configuration extensions for .NET Core Api
 ## Configuration
 
 1. Install `Gainsway.Observability` package in the target project
-  ```sh
-  dotnet add package Gainsway.Observability
-  ```
+    ```sh
+    dotnet add package Gainsway.Observability
+    ```
 2. Register the Observability services in the Infrastructure project:
-  ```csharp
-  # InfrastructureServiceExtensions.cs 
-  var appMetadata = builder.Configuration.GetApplicationMetadata();
-  builder.AddObservability(serviceName: appMetadata.ServiceName, commitShortSha: appMetadata.CommitShortSha);
-  ```
-3. **OPTIONAL** To create tracing span for each method execution of a service, the service's interface needs to be decorated by using one of the following extensions:
-  1. Enable tracing for all services within a namespace
     ```csharp
-      // Program.cs
-      builder.Services.TraceAllServicesInNamespace("Gainsway");
+    # InfrastructureServiceExtensions.cs 
+    var appMetadata = builder.Configuration.GetApplicationMetadata();
+    builder.AddObservability(serviceName: appMetadata.ServiceName, commitShortSha: appMetadata.CommitShortSha);
     ```
-  2. Enable tracing for services' interfaces decorated with Traceable attribute
-    ```csharp
-      // Program.cs
-      builder.Services.TraceDecoratedServices();
-    ```
-    ```csharp
-      // IMyService.cs
-      [Traceable]
-      public interface IMyService {
-        // ...
-      }
-    ```
-  3. Enable tracing for services explicitly defined in the config
-    ```csharp
-      // Program.cs
-      builder.Services.TraceServices([typeof(IMyService), typeof(IOtherService)]);
-    ```
-
+3. **OPTIONAL** To create tracing span for each method execution of a class, using .NET DI framework, the class's interface needs to be decorated by using one of the following extensions:
+    1. Enable tracing for all services within a namespace
+        ```csharp
+          // Program.cs
+          builder.Services.TraceAllServicesInNamespace("Gainsway");
+        ```
+    2. Enable tracing for services' interfaces decorated with Traceable attribute
+        ```csharp
+          // Program.cs
+          builder.Services.TraceDecoratedServices();
+        ```
+        ```csharp
+          // IMyService.cs
+          [Traceable]
+          public interface IMyService {
+            // ...
+          }
+        ```
+    3. Enable tracing for services explicitly defined in the config
+        ```csharp
+          // Program.cs
+          builder.Services.TraceServices([typeof(IMyService), typeof(IOtherService)]);
+        ```
+3. **OPTIONAL** To create tracing span for each method execution of a class **without** using .NET DI framework:
+      ```csharp
+      using Gainsway.Observability
+      // ...
+      IMyService domainServiceInstance = new MyService();
+      IMyService decoratedInstance = TraceDecorator<IMyService>.Create(domainServiceInstance);
+      ```
 
 ## Environment variables
 
