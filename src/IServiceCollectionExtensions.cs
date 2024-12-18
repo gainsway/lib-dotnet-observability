@@ -49,7 +49,7 @@ public static class IServiceCollectionExtensions
     /// </exception>
     public static IServiceCollection TraceAllServicesInNamespace(
         this IServiceCollection services,
-        string _namespace = "Gainsway"
+        string _namespace
     )
     {
         var traceableServices = AppDomain
