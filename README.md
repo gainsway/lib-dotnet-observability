@@ -14,6 +14,30 @@ This library add open telemetry configuration extensions for .NET Core Api
   var appMetadata = builder.Configuration.GetApplicationMetadata();
   builder.AddObservability(serviceName: appMetadata.ServiceName, commitShortSha: appMetadata.CommitShortSha);
   ```
+3. **OPTIONAL** To create tracing span for each method execution of a service, the service's interface needs to be decorated by using one of the following extensions:
+  1. Enable tracing for all services within a namespace
+    ```csharp
+      // Program.cs
+      builder.Services.TraceAllServicesInNamespace("Gainsway");
+    ```
+  2. Enable tracing for services' interfaces decorated with Traceable attribute
+    ```csharp
+      // Program.cs
+      builder.Services.TraceDecoratedServices();
+    ```
+    ```csharp
+      // IMyService.cs
+      [Traceable]
+      public interface IMyService {
+        // ...
+      }
+    ```
+  3. Enable tracing for services explicitly defined in the config
+    ```csharp
+      // Program.cs
+      builder.Services.TraceServices([typeof(IMyService), typeof(IOtherService)]);
+    ```
+
 
 ## Environment variables
 
