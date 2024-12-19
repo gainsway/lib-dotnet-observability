@@ -41,6 +41,7 @@ public static partial class ObservabilityExtensions
             {
                 t.AddAspNetCoreInstrumentation();
                 t.AddHttpClientInstrumentation();
+                t.AddAWSInstrumentation();
                 t.AddNpgsql();
             })
             .UseOtlpExporter();
