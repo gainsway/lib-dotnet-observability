@@ -8,27 +8,35 @@ registries:
   nuget:
     type: nuget-feed
     url: https://api.nuget.org/v3/index.json
-  gainway:
+  gainsway:
     type: nuget-feed
     url: https://nuget.pkg.github.com/gainsway/index.json
     username: gainsway
-    password: ${{secrets.NUGET_TOKEN}}
-    
+    password: ${{ secrets.NUGET_TOKEN }}
+
 updates:
   - package-ecosystem: "dotnet-sdk"
-    directory: "/" 
+    directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
     labels:
       - "dont-check-PRs-with-this-label"
       - "dependencies"
   - package-ecosystem: "nuget"
-    registries: 
+    registries:
       - nuget
-      - gainway
-    directory: "/" 
+      - gainsway
+    directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
     labels:
       - "dont-check-PRs-with-this-label"
       - "dependencies"
