@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Npgsql;
 using OpenTelemetry;
 using OpenTelemetry.Exporter;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -32,7 +33,9 @@ public static partial class ObservabilityExtensions
                 );
                 r.AddEnvironmentVariableDetector();
             })
-            .WithLogging()
+            .WithLogging(opt =>
+            {
+            })
             .WithMetrics(m =>
             {
                 m.AddAspNetCoreInstrumentation();
