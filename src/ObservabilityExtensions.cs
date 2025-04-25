@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using Npgsql;
 using OpenTelemetry;
 using OpenTelemetry.Exporter;
-using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -16,7 +15,9 @@ public static partial class ObservabilityExtensions
     public static void AddObservability(
         this WebApplicationBuilder builder,
         string serviceName,
-        string commitShortSha
+        string commitShortSha,
+        Action<OpenTelemetry.Instrumentation.AspNetCore.AspNetCoreTraceInstrumentationOptions>? aspNetCoreInstrumentationOptions =
+            null
     )
     {
         builder.Services.AddOptions<OtlpExporterOptions>();
@@ -33,17 +34,27 @@ public static partial class ObservabilityExtensions
                 );
                 r.AddEnvironmentVariableDetector();
             })
-            .WithLogging(opt =>
-            {
-            })
+            .WithLogging(opt => { })
             .WithMetrics(m =>
             {
                 m.AddAspNetCoreInstrumentation();
             })
             .WithTracing(t =>
             {
-                t.AddAspNetCoreInstrumentation();
-                t.AddEntityFrameworkCoreInstrumentation();
+                t.AddAspNetCoreInstrumentation(
+                    aspNetCoreInstrumentationOptions
+                        ?? (
+                            opt =>
+                            {
+                                opt.Filter = (httpContext) =>
+                                {
+                                    var path = httpContext.Request.Path.ToString();
+                                    return !path.StartsWith("/healthz")
+                                        && !path.StartsWith("/metrics");
+                                };
+                            }
+                        )
+                );
                 t.AddHttpClientInstrumentation();
                 t.AddAWSInstrumentation();
                 t.AddNpgsql();
