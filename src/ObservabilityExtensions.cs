@@ -43,7 +43,6 @@ public static partial class ObservabilityExtensions
             .WithTracing(t =>
             {
                 t.AddAspNetCoreInstrumentation();
-                t.AddEntityFrameworkCoreInstrumentation();
                 t.AddHttpClientInstrumentation();
                 t.AddAWSInstrumentation();
                 t.AddNpgsql();
