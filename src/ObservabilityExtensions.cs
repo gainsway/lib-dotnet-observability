@@ -50,6 +50,7 @@ public static partial class ObservabilityExtensions
                                 {
                                     var path = httpContext.Request.Path.ToString();
                                     return !path.StartsWith("/healthz")
+                                        && !path.StartsWith("/ready")
                                         && !path.StartsWith("/metrics");
                                 };
                             }
