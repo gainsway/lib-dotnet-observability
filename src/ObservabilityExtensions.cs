@@ -7,6 +7,7 @@ using OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using Temporalio.Extensions.OpenTelemetry;
 
 namespace Gainsway.Observability;
 
@@ -58,6 +59,11 @@ public static partial class ObservabilityExtensions
                 );
                 t.AddHttpClientInstrumentation();
                 t.AddAWSInstrumentation();
+                t.AddSource(
+                    TracingInterceptor.ClientSource.Name,
+                    TracingInterceptor.WorkflowsSource.Name,
+                    TracingInterceptor.ActivitiesSource.Name
+                );
                 t.AddNpgsql();
             })
             .UseOtlpExporter();
