@@ -1,4 +1,4 @@
-# PULLFROG DISPATCHER — inputs only, logic lives in gainsway/github-workflows
+# PULLFROG DISPATCHER — inputs only, logic lives in gainsway/github-workflows-public
 name: Pullfrog
 run-name: ${{ inputs.name || github.workflow }}
 on:
@@ -17,7 +17,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    uses: gainsway/github-workflows/.github/workflows/job.pullfrog.yml@main
+    uses: gainsway/github-workflows-public/.github/workflows/job.pullfrog.yml@main
     with:
       prompt: ${{ inputs.prompt }}
     secrets: inherit
