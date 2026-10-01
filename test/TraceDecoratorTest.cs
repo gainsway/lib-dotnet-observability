@@ -45,9 +45,9 @@ namespace Gainsway.Observability.Tests
         }
 
         [Test]
-        public void DoWorkAsync_ShouldInvokeWithoutException()
+        public async Task DoWorkAsync_ShouldInvokeWithoutException()
         {
-            Assert.DoesNotThrowAsync(async () => await _service.DoWorkAsync());
+            await Assert.DoesNotThrowAsync(async () => await _service.DoWorkAsync());
         }
 
         [Test]
